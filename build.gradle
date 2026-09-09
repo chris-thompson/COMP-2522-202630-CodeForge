@@ -1,0 +1,355 @@
+/* ----------------------------------------------------------------------------
+   Declare which Gradle plugins are active for this project. Each plugin adds
+   capabilities, tasks, conventions, and configuration options to our build.
+   ---------------------------------------------------------------------------- */
+plugins {
+    id 'application'
+    id 'java'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
+    id 'checkstyle'
+    id 'com.github.spotbugs' version '6.5.4'
+    id 'pmd'
+    id 'jacoco'
+}
+
+/* ----------------------------------------------------------------------------
+   Declare variables accessible in this build script.
+   ---------------------------------------------------------------------------- */
+def javaVersion = 26
+def javafxVersion = '26.0.1'
+def checkstyleVersion = '13.4.2'
+def pmdVersion = '7.24.0'
+def jacocoVersion = '0.8.14'
+def junitBomVersion = '5.14.4'
+
+def coverageExclusions = [
+        '**/*Driver*',
+        '**/module-info.class'
+]
+
+/* ----------------------------------------------------------------------------
+   Specify the entry point into our system.
+   ---------------------------------------------------------------------------- */
+application {
+    mainClass = "Driver"
+}
+
+/* ----------------------------------------------------------------------------
+   Use this specific Java version for compiling and running our project,
+   regardless of which Java version(s) our operating system is currently using.
+   ---------------------------------------------------------------------------- */
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(javaVersion)
+    }
+}
+
+/* ----------------------------------------------------------------------------
+   When dependencies are requested, search for them in Maven Central.
+   ---------------------------------------------------------------------------- */
+repositories {
+    mavenCentral()
+}
+
+/* ----------------------------------------------------------------------------
+   Use the specified JavaFX SDK version and include the controls and fxml
+   JavaFX modules in our project.
+   ---------------------------------------------------------------------------- */
+javafx {
+    version = javafxVersion
+    modules = ['javafx.controls', 'javafx.fxml']
+}
+
+/* ----------------------------------------------------------------------------
+   These libraries (dependencies) are required by our project.
+   BOM = Bill Of Materials. A BOM centralizes compatible dependency versions.
+   ---------------------------------------------------------------------------- */
+dependencies {
+    testImplementation platform("org.junit:junit-bom:${junitBomVersion}")
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+/* ----------------------------------------------------------------------------
+   For every Java compilation task in our Gradle project, compile the source
+   files using UTF-8 encoding, and enable all standard Java compiler warnings.
+   ---------------------------------------------------------------------------- */
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.compilerArgs += ['-Xlint:all']
+}
+
+/*
+   Reports are generated under:
+   - build/reports/tests/test/index.html
+   - build/reports/jacoco/test/html/index.html
+   - build/reports/checkstyle/main.html
+   - build/reports/spotbugs/main.html
+   - build/reports/pmd/main.html
+ */
+
+/* ----------------------------------------------------------------------------
+   Run JUnit 5 tests, display useful feedback, do not stop the build when tests
+   fail, and generate coverage reports (execute task jacocoTestReport).
+   ---------------------------------------------------------------------------- */
+tasks.named('test', Test) {
+    useJUnitPlatform()
+    ignoreFailures = true
+    testLogging {
+        events 'passed', 'skipped', 'failed'
+    }
+    finalizedBy tasks.named('jacocoTestReport')
+}
+
+/* ----------------------------------------------------------------------------
+   Use the JaCoCo version specified by jacocoVersion for code coverage analysis.
+   ---------------------------------------------------------------------------- */
+jacoco { toolVersion = jacocoVersion }
+
+/* ----------------------------------------------------------------------------
+   Generate a JaCoCo coverage report after tests run, but exclude certain
+   classes like JavaFX launcher boilerplate code from coverage calculations.
+   ---------------------------------------------------------------------------- */
+tasks.named('jacocoTestReport', JacocoReport) {
+    dependsOn tasks.named('test')
+    reports {
+        html.required.set(true)
+        xml.required.set(false)
+        csv.required.set(false)
+    }
+    classDirectories.setFrom(
+            sourceSets.main.output.asFileTree.matching {
+                exclude coverageExclusions
+            }
+    )
+}
+
+/* ----------------------------------------------------------------------------
+   Use a specific Checkstyle version to analyze code style, and do not stop the
+   build if style violations are found.
+   ---------------------------------------------------------------------------- */
+checkstyle {
+    toolVersion = checkstyleVersion
+    ignoreFailures = true
+}
+
+/* ----------------------------------------------------------------------------
+   Run bug analysis, provide detailed feedback and progress information, but do
+   not fail the build if problems are found.
+   ---------------------------------------------------------------------------- */
+spotbugs {
+    ignoreFailures = true
+    showStackTraces = true
+    showProgress = true
+}
+
+/* ----------------------------------------------------------------------------
+   Run PMD static analysis using specific rule categories, and do not fail the
+   build when violations occur.
+   ---------------------------------------------------------------------------- */
+pmd {
+    toolVersion = pmdVersion
+    ignoreFailures = true
+    consoleOutput = false
+    ruleSets = [
+            "category/java/errorprone.xml",
+            "category/java/bestpractices.xml"
+    ]
+}
+
+/* ----------------------------------------------------------------------------
+   Disable Checkstyle analysis for test source files.
+   ---------------------------------------------------------------------------- */
+tasks.named('checkstyleTest') { enabled = false }
+
+/* ----------------------------------------------------------------------------
+   Disable SpotBugs static analysis for test source files.
+   ---------------------------------------------------------------------------- */
+tasks.named('spotbugsTest') { enabled = false }
+
+/* ----------------------------------------------------------------------------
+   Disable PMD static analysis for test source files.
+   ---------------------------------------------------------------------------- */
+tasks.named('pmdTest') { enabled = false }
+
+/* ----------------------------------------------------------------------------
+   For every Checkstyle task, prefer human-readable HTML reports and do not
+   retain XML reports when the tool allows it.
+   ---------------------------------------------------------------------------- */
+tasks.withType(Checkstyle).configureEach {
+    reports {
+        html.required.set(true)
+        xml.required.set(false)
+    }
+}
+
+/* ----------------------------------------------------------------------------
+   For every SpotBugs task, prefer human-readable HTML reports and do not
+   retain XML reports when the tool allows it.
+   ---------------------------------------------------------------------------- */
+tasks.withType(com.github.spotbugs.snom.SpotBugsTask).configureEach {
+    reports {
+        html.required.set(true)
+        xml.required.set(false)
+    }
+}
+
+/* ----------------------------------------------------------------------------
+   For every PMD task, prefer human-readable HTML reports and do not retain XML
+   reports when the tool allows it.
+   ---------------------------------------------------------------------------- */
+tasks.withType(Pmd).configureEach {
+    reports {
+        html.required.set(true)
+        xml.required.set(false)
+    }
+}
+
+/* ----------------------------------------------------------------------------
+   Create a developer-friendly command that runs all testing and analysis tools
+   together.
+   ---------------------------------------------------------------------------- */
+tasks.register('courseCheck') {
+    group = 'verification'
+    description = 'Runs tests, static analysis, and coverage reports without failing the build.'
+    dependsOn(
+            'test',
+            'checkstyleMain',
+            'spotbugsMain',
+            'pmdMain',
+            'jacocoTestReport'
+    )
+}
+
+/* ----------------------------------------------------------------------------
+   Add clean to courseCheck task.
+   ---------------------------------------------------------------------------- */
+tasks.register('cleanCourseCheck') {
+    group = 'verification'
+    description = 'Cleans the project, then runs the full course verification pipeline.'
+    dependsOn 'clean'
+    finalizedBy 'courseCheck'
+}
+
+/* ----------------------------------------------------------------------------
+   Identify the operating system's native file opener and prepare to open the
+   generated HTML reports.
+   ---------------------------------------------------------------------------- */
+def openHtmlReport = { File reportFile ->
+    if (!reportFile.exists()) {
+        logger.lifecycle("Report not found: ${reportFile}")
+        return
+    }
+    def osName = System.getProperty('os.name').toLowerCase(Locale.ROOT)
+    def command
+    if (osName.contains('mac')) {
+        command = ['open', reportFile.absolutePath]
+    } else if (osName.contains('windows')) {
+        command = ['cmd', '/c', 'start', '', reportFile.absolutePath]
+    } else {
+        command = ['xdg-open', reportFile.absolutePath]
+    }
+    new ProcessBuilder(command)
+            .redirectErrorStream(true)
+            .start()
+}
+
+/* ----------------------------------------------------------------------------
+   Open generated JUnit test HTML report in the system's default browser.
+   ---------------------------------------------------------------------------- */
+tasks.register('openTestReport') {
+    group = 'verification'
+    description = 'Opens the JUnit test report in the default browser.'
+    dependsOn tasks.named('test')
+    doLast {
+        openHtmlReport(
+                layout.buildDirectory
+                        .file("reports/tests/test/index.html")
+                        .get()
+                        .asFile
+        )
+    }
+}
+
+/* ----------------------------------------------------------------------------
+   Open generated JaCoCo HTML report in the system's default browser.
+   ---------------------------------------------------------------------------- */
+tasks.register('openJacocoReport') {
+    group = 'verification'
+    description = 'Opens the JaCoCo coverage report in the default browser.'
+    dependsOn tasks.named('jacocoTestReport')
+    doLast {
+        openHtmlReport(
+                layout.buildDirectory
+                        .file("reports/jacoco/test/html/index.html")
+                        .get()
+                        .asFile
+        )
+    }
+}
+
+/* ----------------------------------------------------------------------------
+   Open generated Checkstyle HTML report in the system's default browser.
+   ---------------------------------------------------------------------------- */
+tasks.register('openCheckstyleReport') {
+    group = 'verification'
+    description = 'Opens the Checkstyle report in the default browser.'
+    dependsOn tasks.named('checkstyleMain')
+    doLast {
+        openHtmlReport(
+                layout.buildDirectory
+                        .file("reports/checkstyle/main.html")
+                        .get()
+                        .asFile
+        )
+    }
+}
+
+/* ----------------------------------------------------------------------------
+   Open generated SpotBugs HTML report in the system's default browser.
+   ---------------------------------------------------------------------------- */
+tasks.register('openSpotbugsReport') {
+    group = 'verification'
+    description = 'Opens the SpotBugs report in the default browser.'
+    dependsOn tasks.named('spotbugsMain')
+    doLast {
+        openHtmlReport(
+                layout.buildDirectory
+                        .file("reports/spotbugs/main.html")
+                        .get()
+                        .asFile
+        )
+    }
+}
+
+/* ----------------------------------------------------------------------------
+   Open generated PMD HTML report in the system's default browser.
+   ---------------------------------------------------------------------------- */
+tasks.register('openPmdReport') {
+    group = 'verification'
+    description = 'Opens the PMD report in the default browser.'
+    dependsOn tasks.named('pmdMain')
+    doLast {
+        openHtmlReport(
+                layout.buildDirectory
+                        .file("reports/pmd/main.html")
+                        .get()
+                        .asFile
+        )
+    }
+}
+
+/* ----------------------------------------------------------------------------
+   Open *ALL* generated HTML reports in the system's default browser.
+   ---------------------------------------------------------------------------- */
+tasks.register('openCourseReports') {
+    group = 'verification'
+    description = 'Runs the course verification pipeline, then opens all HTML reports.'
+    dependsOn(
+            'openTestReport',
+            'openJacocoReport',
+            'openCheckstyleReport',
+            'openSpotbugsReport',
+            'openPmdReport'
+    )
+}

@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC
+        "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
+        "https://checkstyle.org/dtds/configuration_1_3.dtd">
+
+<!-- Check this out for more info: https://checkstyle.sourceforge.io/checks.html -->
+
+<!-- This is a living document. If you want to add/remove/modify a check please contact me. -->
+
+<!-- All configurations have root module Checker. -->
+<module name="Checker">
+
+    <!-- These should be warnings, not ignored, "info", or errors. -->
+    <property name="severity" value="warning"/>
+
+    <!-- Checks for long lines which are so aggravating! -->
+    <module name="LineLength">
+
+        <!-- Ignore lines that start with import because that gets long! -->
+        <property name="ignorePattern" value="^import"/>
+        <!-- A tab is equivalent to four (4) spaces. -->
+        <property name="tabWidth" value="4"/>
+        <!-- Lines of code may not exceed 100 characters. -->
+        <property name="max" value="100"/>
+        <!-- This is for .java source files only. -->
+        <property name="fileExtensions" value="java"/>
+    </module>
+
+    <!-- TreeWalker checks individual Java source files and defines properties that are
+         applicable to checking such files. -->
+    <module name="TreeWalker">
+
+        <!-- This hack added in 202610 so Checkstyle doesn't blow up with pre-super() statements -->
+        <property name="skipFileOnJavaParseException" value="true"/>
+        <property name="javaParseExceptionSeverity" value="ignore"/>
+
+        <!-- Checks for missing Javadoc comments for a method or constructor. -->
+        <module name="MissingJavadocMethod"/>
+
+        <!-- All public class, enum, interface, and annotation definitions have Javadocs -->
+        <module name="MissingJavadocType"/>
+
+        <!-- Checks that Javadocs are located at the correct position. As specified at
+             Documentation Comment Specification for the Standard Doclet, Javadocs are
+             recognized only when placed immediately before module, package, class,
+             interface, constructor, method, or field declarations. Any other position,
+             like in the body of a method, will be ignored by the javadoc tool and is
+             considered invalid by this check. -->
+        <module name="InvalidJavadocPosition"/>
+
+        <!-- Checks the Javadoc of a method or constructor. -->
+        <module name="JavadocMethod">
+
+            <!-- Ensure throws tags are validated. -->
+            <property name="validateThrows" value="true"/>
+            <!-- Doesn't allow missing @param tags. -->
+            <property name="allowMissingParamTags" value="false"/>
+            <!-- Doesn't allow missing @return tags. -->
+            <property name="allowMissingReturnTag" value="false"/>
+        </module>
+
+        <!-- Checks the Javadoc comments for annotation, enum, class, interface definitions. -->
+        <module name="JavadocType">
+
+            <!-- The scope where Javadoc comments are checked. -->
+            <property name="scope" value="protected"/>
+            <!-- Author must be a string. -->
+            <property name="authorFormat" value="\S"/>
+            <!-- Version must be a number. -->
+            <property name="versionFormat" value="\d"/>
+        </module>
+
+        <!-- Checks that a variable has a Javadoc comment. -->
+        <module name="JavadocVariable">
+            <property name="accessModifiers" value="public, package"/>
+
+            <!-- Constants inside enums don't need Javadocs. -->
+            <property name="tokens" value="VARIABLE_DEF"/>
+        </module>
+
+        <!-- Validates Javadoc comments to help ensure they are well formed. -->
+        <module name="JavadocStyle">
+            <!-- Control whether to check if the Javadoc is missing a describing text. -->
+            <property name="checkEmptyJavadoc" value="true"/>
+        </module>
+
+        <!-- Checks that constant names conform to a specified pattern. -->
+        <module name="ConstantName"/>
+
+        <!-- Checks that local final variable names conform to a specified pattern. -->
+        <module name="LocalFinalVariableName"/>
+
+        <!-- Checks that local, non-final variable names conform to a specified pattern. -->
+        <module name="LocalVariableName"/>
+
+        <!-- Checks that instance variable names conform to a specified pattern. -->
+        <module name="MemberName"/>
+
+        <!-- Checks that method names conform to a specified pattern. -->
+        <module name="MethodName"/>
+
+
+		<!-- Checks that method parameter names conform to a specified pattern. -->
+        <module name="ParameterName"/>
+
+        <!-- Checks that static, non-final variable names conform to a specified pattern. -->
+        <module name="StaticVariableName"/>
+
+        <!-- Checks that type names conform to a specified pattern. -->
+        <module name="TypeName"/>
+
+        <!-- Checks that there are no import statements that use the * notation.
+             Rationale: Importing all classes from a package or static members from
+             a class leads to tight coupling between packages or classes and might
+             lead to problems when a new version of a library introduces java101.name clashes. -->
+        <module name="AvoidStarImport"/>
+
+        <!-- Checks for imports from a set of illegal packages, i.a., sun.* LMAO -->
+        <module name="IllegalImport"/>
+
+        <!-- Checks for redundant import statements. An import statement is considered
+             redundant if:
+             1. It is a duplicate of another import. This is, when a class is imported
+                more than once.
+             2. The class non-statically imported is from the java.lang package,
+                a.g., importing java.lang.String.
+             3. The class non-statically imported is from the same package as the
+                current package. -->
+        <module name="RedundantImport"/>
+
+        <!-- Checks for unused import statements. -->
+        <module name="UnusedImports"/>
+
+        <!-- Checks for methods with more than 30 lines of code. Rationale: If a method
+             becomes very long it is hard to understand. Therefore long methods should
+             usually be refactored into several individual methods that focus on a specific
+             task. -->
+        <module name="MethodLength">
+            <property name="tokens" value="METHOD_DEF"/>
+            <property name="max" value="30"/>
+            <property name="countEmpty" value="false"/>
+        </module>
+
+        <!-- Checks for constructors with more than 40 lines of code. -->
+        <module name="MethodLength">
+            <property name="tokens" value="CTOR_DEF"/>
+            <property name="max" value="40"/>
+            <property name="countEmpty" value="false"/>
+        </module>
+
+        <!-- More than 7 parameters is too much. 7 is pushing it, honestly. -->
+        <module name="ParameterNumber"/>
+
+        <!-- Checks the padding of an empty for iterator (not needed). -->
+        <module name="EmptyForIteratorPad"/>
+
+        <!-- Checks the padding between the identifier of a method definition, constructor
+             definition, method call, or constructor invocation; and the left parenthesis
+             of the parameter list. -->
+        <module name="MethodParamPad"/>
+
+        <!-- Checks that the whitespace around the Generic tokens (angle brackets) "<"
+             and ">" are correct to the typical convention. The convention is not
+             configurable.
+             https://checkstyle.sourceforge.io/config_whitespace.html#GenericWhitespace -->
+        <module name="GenericWhitespace"/>
+
+        <!-- Checks that there is no whitespace after a token. -->
+        <module name="NoWhitespaceAfter"/>
+
+        <!-- Checks that there is no whitespace before a token. -->
+        <module name="NoWhitespaceBefore"/>
+
+        <!-- Checks the policy on how to wrap lines on operators. -->
+        <module name="OperatorWrap"/>
+
+        <!-- Checks the policy on the padding of parentheses; that is whether a space
+             is required after a left parenthesis and before a right parenthesis, or
+             such spaces are forbidden (hint: they are!) -->
+        <module name="ParenPad"/>
+
+        <!-- Checks the policy on the padding of parentheses for typecasts (forbidden!) -->
+        <module name="TypecastParenPad">
+            <property name="tokens" value="RPAREN,TYPECAST"/>
+        </module>
+
+        <!-- Checks that a token is followed by whitespace. -->
+        <module name="WhitespaceAfter"/>
+
+        <!-- Checks that a token is surrounded by whitespace. -->
+        <module name="WhitespaceAround"/>
+
+        <!-- Checks that the order of modifiers conforms to the
+             suggestions in the Java Language specification:
+             public
+             protected
+             private
+             abstract
+             default
+             static
+             final
+             transient
+             volatile
+             synchronized
+             native
+             strictfp -->
+        <module name="ModifierOrder"/>
+
+        <!-- Checks for redundant modifiers. Rationale: The Java Language Specification
+             strongly discourages the usage of public and abstract for method declarations
+             in interface definitions as a matter of style.
+             The check validates:
+                Interface and annotation definitions.
+                Final modifier on methods of final and anonymous classes.
+                Inner interface declarations that are declared as static.
+                Class constructors.
+                Nested enum definitions that are declared as static. -->
+        <module name="RedundantModifier"/>
+
+        <!-- Finds nested blocks (blocks that are used freely in the code). -->
+        <module name="AvoidNestedBlocks"/>
+
+        <!-- Checks for empty blocks. This check does not validate sequential blocks. -->
+        <module name="EmptyBlock"/>
+
+        <!-- Checks for the placement of left curly braces ('{') for code blocks. We
+             will put them at the end of the line. -->
+        <module name="LeftCurly"/>
+
+        <!-- Checks for braces around code blocks (yes!) -->
+        <module name="NeedBraces"/>
+
+        <!-- Checks the placement of right curly braces ('}') for code blocks. -->
+        <module name="RightCurly"/>
+
+        <!-- Detects inline conditionals. Rationale: Some developers find inline
+             conditionals hard to read, so their employer's coding standards forbid
+             them. -->
+        <module name="AvoidInlineConditionals"/>
+
+        <!-- Detects and disallows empty statements (standalone ";" semicolon). -->
+        <module name="EmptyStatement"/>
+
+        <!-- Checks that a class that either overrides equals() or hashCode() also
+             overrides the other. -->
+        <module name="EqualsHashCode"/>
+
+        <!-- Checks that a local variable or a parameter does not shadow a field
+             that is defined in the same class. -->
+        <module name="HiddenField">
+            <property name="ignoreConstructorParameter" value="true"/>
+            <property name="ignoreSetter" value="true"/>
+        </module>
+
+        <!-- Checks for illegal instantiations where a factory method is preferred. -->
+        <module name="IllegalInstantiation"/>
+
+        <!-- Disallows assignments in subexpressions, such as in:
+             String s = Integer.toString(i = 2);m -->
+        <module name="InnerAssignment"/>
+
+        <!-- Checks that there are no "magic numbers" where a magic number is a numeric
+             literal that is not defined as a constant. By default, -1, 0, 1, and 2 are
+             not considered to be magic numbers. Constant definition is any variable/field
+             that has 'final' modifier. It is fine to have one constant defining multiple
+             numeric literals within one expression:
+             static final int SECONDS_PER_DAY = 24 * 60 * 60;
+             static final double SPECIAL_RATIO = 4.0 / 3.0;
+             static final double SPECIAL_SUM = 1 + Math.E;
+             static final double SPECIAL_DIFFERENCE = 4 - Math.PI;
+             static final Border STANDARD_BORDER = BorderFactory.createEmptyBorder(3, 3, 3, 3);
+             static final Integer ANSWER_TO_THE_ULTIMATE_QUESTION_OF_LIFE = new Integer(42); -->
+        <module name="MagicNumber"/>
+
+        <!-- Checks that switch statement has a default clause. -->
+        <module name="MissingSwitchDefault"/>
+
+        <!-- Checks for over-complicated boolean expressions. Currently finds code
+        like: if (b == true), b || true, !false, etc. Rationale: Complex boolean logic
+        makes code hard to understand and maintain. -->
+        <module name="SimplifyBooleanExpression"/>
+
+        <!-- Checks for over-complicated boolean return statements. -->
+        <module name="SimplifyBooleanReturn"/>
+
+        <!-- Checks that classes are designed for extension (subclass creation).
+             The check finds classes that have overridable methods (public or protected
+             methods that are non-static, not-final, non-abstract) and have non-empty
+             implementation. Rationale: This library design style protects superclasses
+             against being broken by subclasses. The downside is that subclasses are limited
+             in their flexibility, in particular they cannot prevent execution of code in the
+             superclass, but that also means that subclasses cannot corrupt the state of the
+             superclass by forgetting to call the superclass's method. More specifically, it
+             enforces a programming style where superclasses provide empty "hooks" that can be
+             implemented by subclasses.
+
+             https://checkstyle.sourceforge.io/config_design.html#DesignForExtension
+
+             The class must document its self-use of overridable methods. By convention, a
+             method that invokes overridable methods contains a description of these invocations
+             at the end of its documentation comment. The description begins with the phrase “This
+             implementation.” -->
+        <module name="DesignForExtension"/>
+
+        <!-- Checks that a class which has only private constructors is declared as final.
+             Doesn't check for classes nested in interfaces or annotations, as they are
+             always final there. -->
+        <module name="FinalClass"/>
+
+        <!-- Makes sure that utility classes (classes that contain only static methods
+             or fields in their API) do not have a public constructor. -->
+        <module name="HideUtilityClassConstructor"/>
+
+        <!-- Implements Joshua Bloch, Effective Java, Item 17 - Use Interfaces only to
+             define types. I told you this person's point of view is valued! According to
+             Bloch, an interface should describe a type. It is therefore inappropriate to
+             define an interface that does not contain any methods but only constants. -->
+        <module name="InterfaceIsType"/>
+
+        <!-- Checks visibility of class members. Only static final, immutable or annotated
+             by specified annotation members may be public; other class members must be private
+             unless the property protectedAllowed or packageAllowed is set.
+
+              Paramount: enforce encapsulation! -->
+        <module name="VisibilityModifier">
+            <property name="packageAllowed" value="true"/>
+            <property name="protectedAllowed" value="true"/>
+            <property name="allowPublicFinalFields" value="true"/>
+        </module>
+
+        <!-- Checks the style of array type definitions.
+             Some like Java style: public static void main(String[] args)
+             and some like C style: public static void main(String args[]).
+             We will use Java style. -->
+        <module name="ArrayTypeStyle"/>
+
+        <!-- Checks that parameters for methods, constructors, catch and for-each
+             blocks are final. Interface, abstract, and native methods are not checked:
+             the final keyword does not make sense for interface, abstract, and native
+             method parameters as there is no code that could modify the parameter. -->
+        <module name="FinalParameters"/>
+
+        <!-- Checks for TODO: comments. Using TODO: comments is a great way to keep
+             track of tasks that need to be done. Having them reported by Checkstyle
+             makes it very hard to forget about them. -->
+        <module name="TodoComment"/>
+
+        <!-- Checks that long constants are defined with an upper ell. That is
+             'L' and not 'l'. -->
+        <module name="UpperEll"/>
+
+        <!-- Restricts the number of executable statements to a specified limit: 30 -->
+        <module name="ExecutableStatementCount"/>
+
+        <!-- Checks that for loop control variables are not modified inside the for block. -->
+        <module name="ModifiedControlVariable"/>
+
+        <!-- Checks that string literals are not used with == or !=. -->
+        <module name="StringLiteralEquality"/>
+
+        <!-- Checks that an overriding clone() method invokes super.clone(). -->
+        <module name="SuperClone"/>
+
+        <!-- Checks that an overriding finalize() method invokes super.finalize(). -->
+        <module name="SuperFinalize"/>
+
+        <!-- Checks that certain exception types do not appear in a catch statement.
+             Rationale: catching java.lang.Exception, java.lang.Error or
+             java.lang.RuntimeException is almost never acceptable. Novice developers often
+             simply catch Exception in an attempt to handle multiple exception classes.
+             This unfortunately leads to code that inadvertently catches NullPointerException,
+             OutOfMemoryError, etc. -->
+        <module name="IllegalCatch"/>
+
+        <!-- Checks that specified types are not declared to be thrown.
+             Declaring that a method throws java.lang.Error or
+             java.lang.RuntimeException is almost never acceptable. -->
+        <module name="IllegalThrows"/>
+
+        <!-- Restricts throws statements to a specified count (4). Methods with
+             "Override" or "java.lang.Override" annotation are skipped from validation
+             as current class cannot change signature of these methods. -->
+        <module name="ThrowsCount">
+            <property name="max" value="4"/>
+        </module>
+
+        <!-- Checks that the parts of a class, record, or interface declaration appear
+             in the order suggested by the Code Conventions for the Java Programming Language.
+             According to Code Conventions for the Java Programming Language, the parts of a
+             class or interface declaration should appear in the following order:
+             1. Class (static) variables. First the public class variables, then protected,
+                then package level (no access modifier), and then private.
+             2. Instance variables. First the public class variables, then protected, then
+                package level (no access modifier), and then private.
+             3. Constructors
+             4. Methods -->
+        <module name="DeclarationOrder"/>
+
+        <!-- Checks if any class or object member is explicitly initialized to default
+             for its type value (null for object references, zero for numeric types and
+             char and false for boolean. Rationale: Each instance variable gets initialized
+             twice, to the same value. Java initializes each instance variable to its
+             default value (0 or null) before performing any initialization specified in
+             the code. So there is a minor inefficiency. -->
+<!--        <module java101.name="ExplicitInitialization">-->
+<!--            <property java101.name="onlyObjectReferences" value="true"/>-->
+<!--        </module>-->
+
+        <!-- Check that the default is after all the cases in a switch statement. -->
+        <module name="DefaultComesLast"/>
+
+        <!-- Checks for fall-through in switch statements. Finds locations where an
+             old school switch statement case contains Java code but lacks a break,
+             return, throw, or continue statement. -->
+        <module name="FallThrough"/>
+
+        <!-- Checks that each variable declaration is in its own statement and on its
+             own line. -->
+        <module name="MultipleVariableDeclarations"/>
+    </module>
+
+    <!-- Checks that each Java package has a Javadoc file used for commenting. By default
+         it only allows a package-info.java file, but can be configured to allow a
+         package.html file. A violation will be reported if both files exist as this is
+         not allowed by the Javadoc tool. -->
+    <module name="JavadocPackage">
+        <property name="severity" value="ignore"/>
+    </module>
+
+	<!-- Checks whether files end with a new line character - they must! -->
+    <module name="NewlineAtEndOfFile"/>
+
+	<!-- Ensures the correct translation of code by checking property files for consistency. -->
+    <module name="Translation"/>
+
+	<!-- Checks for long source files. The limit is 2000 lines right now. -->
+    <module name="FileLength"/>
+
+    <!-- Checks for whitespace, i.a., tabs '\t' are forbidden! -->
+    <module name="FileTabCharacter"/>
+
+    <!-- Let's avoid using trailing spaces, too. -->
+    <module name="RegexpSingleline">
+        <property name="format" value="\s+$"/>
+        <property name="minimum" value="0"/>
+        <property name="maximum" value="0"/>
+        <property name="message" value="Line has trailing spaces."/>
+    </module>
+</module>
