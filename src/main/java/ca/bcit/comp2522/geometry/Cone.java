@@ -66,7 +66,7 @@ public final class Cone {
      */
     public double getVolume() {
         final double third = 1.0 / 3.0;
-        return third * Math.PI * Math.pow(radius, SQUARED);
+        return third * Math.PI * Math.pow(radius, SQUARED) * height;
     }
 
     /**
