@@ -15,8 +15,8 @@ plugins {
 /* ----------------------------------------------------------------------------
    Declare variables accessible in this build script.
    ---------------------------------------------------------------------------- */
-def javaVersion = 26
-def javafxVersion = '26.0.1'
+def javaVersion = 25
+def javafxVersion = '25.0.1'
 def checkstyleVersion = '13.4.2'
 def pmdVersion = '7.24.0'
 def jacocoVersion = '0.8.14'
