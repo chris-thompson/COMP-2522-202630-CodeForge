@@ -162,10 +162,11 @@ pmd {
     toolVersion = pmdVersion
     ignoreFailures = true
     consoleOutput = false
-    ruleSets = [
-            "category/java/errorprone.xml",
-            "category/java/bestpractices.xml"
-    ]
+    // An empty ruleSets list is required, otherwise PMD adds its own default
+    // ruleset on top of ours. See config/pmd/ruleset.xml for what is checked
+    // and, more interestingly, for the one rule that is deliberately not.
+    ruleSets = []
+    ruleSetFiles = files('config/pmd/ruleset.xml')
 }
 
 /* ----------------------------------------------------------------------------
