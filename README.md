@@ -5,7 +5,7 @@
 This is every piece of Java I write on the board, and quite a lot that I do not
 have time to. As we examine the language we will pull examples from here.
 
-There are over 240 files in 38 topics, plus a test suite. By the end of the term you
+There are 244 files in 38 topics, plus a test suite. By the end of the term you
 will have studied most of them.
 
 ## How should you use it?

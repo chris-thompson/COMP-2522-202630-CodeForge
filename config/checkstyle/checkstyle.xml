@@ -446,4 +446,36 @@
         <property name="maximum" value="0"/>
         <property name="message" value="Line has trailing spaces."/>
     </module>
+
+    <!-- MagicNumber is switched off inside the JavaFX launcher classes.
+
+         Every lab from 01 onward ends with a JavaFX step whose whole job is
+         to place shapes at chosen coordinates, and a coordinate has no name
+         worth giving it. Checkstyle exempts a literal that initialises a
+         final variable, so the driver escapes, but the points a student
+         passes straight to a draw call do not. That left the *App classes
+         reporting ten or more magic numbers the spec itself had asked for,
+         against a pass checklist that requires a clean report. The check is
+         still on everywhere else, where naming a number is real advice. -->
+    <module name="SuppressionSingleFilter">
+        <property name="checks" value="MagicNumber"/>
+        <property name="files" value=".*App\.java$"/>
+    </module>
+
+    <!-- MethodLength and ExecutableStatementCount are switched off inside
+         the console driver, Main.java.
+
+         Every lab's spec dictates what main prints, line by line, so the
+         Sample Execution fixes the length of the method. From Lab 03 onward
+         that is more than thirty statements, and a student cannot split main
+         up: a static helper method is Week 5. The checklist requires a clean
+         report, which the spec's own driver could not reach. Lab 02's driver
+         was trimmed instead, on 20 September 2026; Lab 03's could not be,
+         because its Sample Execution alone needs about thirty statements.
+         Both checks stay on everywhere else, where a long method is a real
+         design smell. -->
+    <module name="SuppressionSingleFilter">
+        <property name="checks" value="MethodLength|ExecutableStatementCount"/>
+        <property name="files" value="[\\/]Main\.java$"/>
+    </module>
 </module>

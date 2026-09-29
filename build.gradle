@@ -35,6 +35,17 @@ application {
 }
 
 /* ----------------------------------------------------------------------------
+   Run any one sample by its fully qualified class name:
+       ./gradlew runSample -Psample=ca.bcit.comp2522.arrays.MatrixDriver
+   ---------------------------------------------------------------------------- */
+tasks.register('runSample', JavaExec) {
+    group = 'application'
+    description = 'Runs one sample: ./gradlew runSample -Psample=<fully.qualified.Class>'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = project.findProperty('sample') ?: 'Driver'
+}
+
+/* ----------------------------------------------------------------------------
    Use this specific Java version for compiling and running our project,
    regardless of which Java version(s) our operating system is currently using.
    ---------------------------------------------------------------------------- */
