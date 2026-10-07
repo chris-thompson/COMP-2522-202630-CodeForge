@@ -20,8 +20,8 @@
         <property name="ignorePattern" value="^import"/>
         <!-- A tab is equivalent to four (4) spaces. -->
         <property name="tabWidth" value="4"/>
-        <!-- Lines of code may not exceed 100 characters. -->
-        <property name="max" value="100"/>
+        <!-- Lines of code may not exceed 120 characters. -->
+        <property name="max" value="120"/>
         <!-- This is for .java source files only. -->
         <property name="fileExtensions" value="java"/>
     </module>
