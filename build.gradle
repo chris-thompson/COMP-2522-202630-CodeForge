@@ -35,6 +35,17 @@ application {
 }
 
 /* ----------------------------------------------------------------------------
+   Run any one sample by its fully qualified class name:
+       ./gradlew runSample -Psample=ca.bcit.comp2522.arrays.MatrixDriver
+   ---------------------------------------------------------------------------- */
+tasks.register('runSample', JavaExec) {
+    group = 'application'
+    description = 'Runs one sample: ./gradlew runSample -Psample=<fully.qualified.Class>'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = project.findProperty('sample') ?: 'Driver'
+}
+
+/* ----------------------------------------------------------------------------
    Use this specific Java version for compiling and running our project,
    regardless of which Java version(s) our operating system is currently using.
    ---------------------------------------------------------------------------- */
@@ -151,10 +162,11 @@ pmd {
     toolVersion = pmdVersion
     ignoreFailures = true
     consoleOutput = false
-    ruleSets = [
-            "category/java/errorprone.xml",
-            "category/java/bestpractices.xml"
-    ]
+    // An empty ruleSets list is required, otherwise PMD adds its own default
+    // ruleset on top of ours. See config/pmd/ruleset.xml for what is checked
+    // and, more interestingly, for the one rule that is deliberately not.
+    ruleSets = []
+    ruleSetFiles = files('config/pmd/ruleset.xml')
 }
 
 /* ----------------------------------------------------------------------------

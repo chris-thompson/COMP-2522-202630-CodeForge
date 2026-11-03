@@ -1,0 +1,6 @@
+ca.bcit.comp2522.inheritance.introToInheritance.firm.Executive	Sam	123 Main Line	555-0469	123-45-6789	2423.07
+ca.bcit.comp2522.inheritance.introToInheritance.firm.Employee	Carla	456 Off Line	555-0101	987-65-4321	1246.15
+ca.bcit.comp2522.inheritance.introToInheritance.firm.Employee	Woody	789 Off Rocker	555-0000	010-20-3040	1169.23
+ca.bcit.comp2522.inheritance.introToInheritance.firm.Hourly	Diane	678 Fifth Ave.	555-0690	958-47-3625	10.55
+ca.bcit.comp2522.inheritance.introToInheritance.firm.Volunteer	Norm	987 Suds Blvd.	555-8374
+ca.bcit.comp2522.inheritance.introToInheritance.firm.Volunteer	Cliff	321 Duds Lane	555-7282

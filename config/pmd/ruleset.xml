@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="COMP 2522 sample code"
+         xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0
+                             https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
+
+    <description>
+        The same two PMD categories your labs are checked against, with one
+        rule removed.
+
+        SystemPrintln reports every call to System.out.println. That rule is
+        correct advice for production software, where output belongs in a
+        logging framework. It is wrong advice here: printing is how a lecture
+        sample shows you what it did, so essentially every file in this
+        repository would be reported. When 71% of a report is noise you stop
+        reading the report, and the report is the point.
+
+        The rule is still active in your lab builds. Nothing else is removed.
+    </description>
+
+    <rule ref="category/java/errorprone.xml"/>
+
+    <rule ref="category/java/bestpractices.xml">
+        <exclude name="SystemPrintln"/>
+    </rule>
+
+</ruleset>
