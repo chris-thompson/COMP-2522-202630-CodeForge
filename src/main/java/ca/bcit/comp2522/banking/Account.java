@@ -160,10 +160,10 @@ public final class Account {
         int result;
         long temp;
         final int shiftLongToInt = 32;
-        result = (int) (acctNumber ^ (acctNumber >>> shiftLongToInt));
+        result = Long.hashCode(acctNumber);
         temp = Double.doubleToLongBits(getBalance());
         final int usefulPrime = 31;
-        result = usefulPrime * result + (int) (temp ^ (temp >>> shiftLongToInt));
+        result = usefulPrime * result + Long.hashCode(temp);
         if (identifier != null) {
             result = usefulPrime * result + identifier.hashCode();
         } else {
