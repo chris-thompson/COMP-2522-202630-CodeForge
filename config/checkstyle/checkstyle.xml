@@ -323,7 +323,7 @@
 
               Paramount: enforce encapsulation! -->
         <module name="VisibilityModifier">
-            <property name="packageAllowed" value="true"/>
+            <property name="packageAllowed" value="false"/>
             <property name="protectedAllowed" value="true"/>
             <property name="allowPublicFinalFields" value="true"/>
         </module>
@@ -417,6 +417,53 @@
         <!-- Checks that each variable declaration is in its own statement and on its
              own line. -->
         <module name="MultipleVariableDeclarations"/>
+
+        <!-- MagicNumber is switched off inside main, and only there.
+
+             A driver's numbers are the data of its Sample Execution: the
+             sizes and positions of what it builds, and the points it probes.
+             Naming each one adds noise, not meaning, and a literal passed
+             straight to a constructor or a method call has no final variable
+             to hide behind. Every other method still has to name its numbers,
+             including a helper written inside Main.java. Added on 2 October
+             2026, from Lab 04 onward. -->
+        <module name="SuppressionXpathSingleFilter">
+            <property name="checks" value="MagicNumber"/>
+            <property name="files" value="[\\/]Main\.java$"/>
+            <property name="query"
+                      value="//METHOD_DEF[./IDENT[@text='main']]/descendant-or-self::node()"/>
+        </module>
+
+        <!-- MethodLength and ExecutableStatementCount are switched off in two
+             methods, and only there: main in Main.java, and start in the
+             JavaFX launcher classes.
+
+             Every spec dictates what main prints, line by line, so the Sample
+             Execution fixes the length of the method. From Lab 03 onward that
+             is more than thirty statements. Lab 02's driver was trimmed
+             instead, on 20 September 2026. Lab 03's could not be, because its
+             Sample Execution alone needs about thirty statements. A lab's
+             JavaFX step is written inside the provided start, between two
+             comment bars, and the spec forbids moving it out, so start cannot
+             be split up either. The checklist requires a clean report, which
+             neither method could promise.
+
+             Both checks stay on everywhere else, where a long method is a real
+             design smell, including a helper written inside Main.java or a
+             launcher. Until 14 October 2026 all of Main.java was exempt, and
+             start was not. -->
+        <module name="SuppressionXpathSingleFilter">
+            <property name="checks" value="MethodLength|ExecutableStatementCount"/>
+            <property name="files" value="[\\/]Main\.java$"/>
+            <property name="query"
+                      value="//METHOD_DEF[./IDENT[@text='main']]/descendant-or-self::node()"/>
+        </module>
+        <module name="SuppressionXpathSingleFilter">
+            <property name="checks" value="MethodLength|ExecutableStatementCount"/>
+            <property name="files" value=".*App\.java$"/>
+            <property name="query"
+                      value="//METHOD_DEF[./IDENT[@text='start']]/descendant-or-self::node()"/>
+        </module>
     </module>
 
     <!-- Checks that each Java package has a Javadoc file used for commenting. By default
@@ -460,22 +507,5 @@
     <module name="SuppressionSingleFilter">
         <property name="checks" value="MagicNumber"/>
         <property name="files" value=".*App\.java$"/>
-    </module>
-
-    <!-- MethodLength and ExecutableStatementCount are switched off inside
-         the console driver, Main.java.
-
-         Every lab's spec dictates what main prints, line by line, so the
-         Sample Execution fixes the length of the method. From Lab 03 onward
-         that is more than thirty statements, and a student cannot split main
-         up: a static helper method is Week 5. The checklist requires a clean
-         report, which the spec's own driver could not reach. Lab 02's driver
-         was trimmed instead, on 20 September 2026; Lab 03's could not be,
-         because its Sample Execution alone needs about thirty statements.
-         Both checks stay on everywhere else, where a long method is a real
-         design smell. -->
-    <module name="SuppressionSingleFilter">
-        <property name="checks" value="MethodLength|ExecutableStatementCount"/>
-        <property name="files" value="[\\/]Main\.java$"/>
     </module>
 </module>

@@ -31,7 +31,7 @@ public class HelloWorldLocalClasses {
         /* A local class is defined and assigned to a variable.
            It is an implementation of the HelloWorld interface. */
         class EnglishGreeting implements HelloWorld {
-            String name = "world";
+            private String name = "world";
 
             @Override
             public void greet() {
@@ -50,7 +50,7 @@ public class HelloWorldLocalClasses {
         /* A local class is defined and assigned to a variable.
            It is an implementation of the HelloWorld interface. */
         HelloWorld frenchGreeting = new HelloWorld() {
-            String name = "tout le monde";
+            private String name = "tout le monde";
 
             @Override
             public void greet() {
@@ -67,7 +67,7 @@ public class HelloWorldLocalClasses {
         /* A local class is defined and assigned to a variable.
            It is an implementation of the HelloWorld interface. */
         HelloWorld spanishGreeting = new HelloWorld() {
-            String name = "mundo";
+            private String name = "mundo";
 
             @Override
             public void greet() {
