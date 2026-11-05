@@ -159,7 +159,6 @@ public final class Account {
     public int hashCode() {
         int result;
         long temp;
-        final int shiftLongToInt = 32;
         result = Long.hashCode(acctNumber);
         temp = Double.doubleToLongBits(getBalance());
         final int usefulPrime = 31;
