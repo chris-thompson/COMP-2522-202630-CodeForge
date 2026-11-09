@@ -1,7 +1,9 @@
 package ca.bcit.comp2522.innerClasses;
 
 /**
- * Check out this super simple calculator. This contains lambda!
+ * Check out this super simple calculator. This contains lambda! Lambdas and
+ * method references are Week 13. If you are reading this in Week 11, look at
+ * the nested interface now and come back to main later.
  *
  * @author BCIT
  * @version 2026
@@ -52,7 +54,7 @@ public class Calculator {
         final Calculator myApp = new Calculator();
         // This is a method reference. Java borrowed the :: syntax from C++.
         IntegerMath addition = Integer::sum;
-        // This is a lambda, which is a very compact form of anonymous class.
+        // This is a lambda. You can think of it as an anonymous method.
         IntegerMath subtraction = (a, b) -> a - b;
         System.out.println(firstOperand + " + " + secondOperand + " = "
                 + myApp.operateBinary(firstOperand, secondOperand, addition));

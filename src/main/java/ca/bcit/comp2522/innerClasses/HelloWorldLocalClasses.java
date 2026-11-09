@@ -28,7 +28,7 @@ public class HelloWorldLocalClasses {
     // thing being demonstrated, so the violation stands deliberately.
     public void sayHello() {
 
-        /* A local class is defined and assigned to a variable.
+        /* A local class: it has a name, and it is declared inside this method.
            It is an implementation of the HelloWorld interface. */
         class EnglishGreeting implements HelloWorld {
             private String name = "world";
@@ -47,8 +47,8 @@ public class HelloWorldLocalClasses {
 
         HelloWorld englishGreeting = new EnglishGreeting();
 
-        /* A local class is defined and assigned to a variable.
-           It is an implementation of the HelloWorld interface. */
+        /* An anonymous class: it is declared and instantiated in one expression,
+           and it has no name. It is an implementation of the HelloWorld interface. */
         HelloWorld frenchGreeting = new HelloWorld() {
             private String name = "tout le monde";
 
@@ -64,8 +64,8 @@ public class HelloWorldLocalClasses {
             }
         };
 
-        /* A local class is defined and assigned to a variable.
-           It is an implementation of the HelloWorld interface. */
+        /* An anonymous class: it is declared and instantiated in one expression,
+           and it has no name. It is an implementation of the HelloWorld interface. */
         HelloWorld spanishGreeting = new HelloWorld() {
             private String name = "mundo";
 

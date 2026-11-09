@@ -162,13 +162,18 @@ public final class Sphere {
     @Override
     public boolean equals(final Object other) {
 
+        // null is never equal to anything.
+        if (other == null) {
+            return false;
+        }
+
         // An object is always equal to itself, and this is the cheap test.
         if (this == other) {
             return true;
         }
 
-        // null is never equal to anything, and neither is a different type.
-        if (other == null || getClass() != other.getClass()) {
+        // An object of a different class is never equal, not even a subclass.
+        if (getClass() != other.getClass()) {
             return false;
         }
 

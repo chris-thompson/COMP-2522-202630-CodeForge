@@ -21,7 +21,7 @@ public final class BoxDriver {
         Box<Integer> integerBox = new Box<>(anAutoBoxedInt);
         Box<String> stringBox = new Box<>("Hello World");
 
-        System.out.println("Integer Value: " + integerBox.get());
-        System.out.println("String Value: " + stringBox.get());
+        System.out.println("Integer Value: " + integerBox.getContent());
+        System.out.println("String Value: " + stringBox.getContent());
     }
 }

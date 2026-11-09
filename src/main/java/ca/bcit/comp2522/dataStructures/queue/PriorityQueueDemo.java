@@ -3,7 +3,7 @@ package ca.bcit.comp2522.dataStructures.queue;
 import java.util.PriorityQueue;
 
 /**
- * PriorityQueueTest.
+ * PriorityQueueDemo.
  *
  * @author BCIT
  * @version 2026

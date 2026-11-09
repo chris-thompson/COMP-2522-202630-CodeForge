@@ -12,6 +12,13 @@ public class Box<T> {
     private T t;
 
     /**
+     * Constructs an empty Box, as on the Week 12 slides.
+     */
+    public Box() {
+        this.t = null;
+    }
+
+    /**
      * Constructor for objects of type Box.
      *
      * @param toBeBoxed the value to box
@@ -32,7 +39,7 @@ public class Box<T> {
      * Returns the value boxed.
      * @return t the value boxed
      */
-    public T get() {
+    public T getContent() {
         return t;
     }
 }

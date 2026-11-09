@@ -3,7 +3,7 @@ package ca.bcit.comp2522.innerClasses;
 /**
  * This is a rotten egg. It doesn't initialize the Yolk object it contains. The
  * variable yolk will store the value null if we do not instantiate it inside
- * the BadEgg's constructor.
+ * the constructor. Run it and read the NullPointerException.
  *
  * @author BCIT
  * @version 2026

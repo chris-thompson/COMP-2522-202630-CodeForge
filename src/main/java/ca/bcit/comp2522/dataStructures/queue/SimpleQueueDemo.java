@@ -10,8 +10,8 @@ import ca.bcit.comp2522.dataStructures.linkedList.EmptyLinkedListException;
  */
 public final class SimpleQueueDemo {
 
-    /** The third value pushed in, so it is the first one to come back out. */
-    private static final int THIRD_VALUE = 5;
+    /** The last value enqueued, so in a queue it is the last one to come back out. */
+    private static final int LAST_VALUE = 5;
 
     private SimpleQueueDemo() {
 
@@ -31,17 +31,21 @@ public final class SimpleQueueDemo {
         simpleQueue.print();
         simpleQueue.enqueue(1);
         simpleQueue.print();
-        simpleQueue.enqueue(THIRD_VALUE);
+        simpleQueue.enqueue(LAST_VALUE);
         simpleQueue.print();
 
+        while (!simpleQueue.isEmpty()) {
+            Object removedObject = simpleQueue.dequeue();
+            System.out.printf("%s dequeued%n", removedObject);
+            simpleQueue.print();
+        }
+
+        // The loop looked before it leapt. Dequeuing from an empty queue anyway
+        // is a programming error, and it throws.
         try {
-            while (true) {
-                Object removedObject = simpleQueue.dequeue();
-                System.out.printf("%s dequeued\n", removedObject);
-                simpleQueue.print();
-            }
+            simpleQueue.dequeue();
         } catch (EmptyLinkedListException emptyListException) {
-            emptyListException.printStackTrace();
+            System.out.println(emptyListException.getMessage());
         }
     }
 }

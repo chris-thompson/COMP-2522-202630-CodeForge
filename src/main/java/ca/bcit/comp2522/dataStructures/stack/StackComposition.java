@@ -13,7 +13,7 @@ public class StackComposition {
     private SimpleDoublyLinkedList stackList;
 
     /**
-     * Constructs an object of type List.
+     * Constructs an object of type StackComposition.
      */
     public StackComposition() {
         stackList = new SimpleDoublyLinkedList();

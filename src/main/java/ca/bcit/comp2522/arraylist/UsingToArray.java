@@ -16,7 +16,7 @@ public final class UsingToArray {
     private UsingToArray() { }
 
     /**
-     * Constructs an object of type UsingToArray.
+     * Adds colours to a list, copies the list into an array, and prints it.
      */
     public static void toArrayDemo() {
         String[] colours = {"black", "blue", "yellow"};

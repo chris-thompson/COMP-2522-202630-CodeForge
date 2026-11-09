@@ -3,7 +3,7 @@ package ca.bcit.comp2522.sorting;
 import java.util.Comparator;
 
 /**
- * TimeComparator compares two Time2 objects.
+ * TimeComparator compares two SimpleTime objects.
  *
  * @author BCIT
  * @version 2026
@@ -11,9 +11,9 @@ import java.util.Comparator;
 public class TimeComparator implements Comparator<SimpleTime> {
 
     /**
-     * Compares the two Time2 arguments.
-     * @param simpleTime1 a Time2
-     * @param simpleTime2 a Time2
+     * Compares the two SimpleTime arguments.
+     * @param simpleTime1 a SimpleTime
+     * @param simpleTime2 a SimpleTime
      * @return an int where 0 means they are the same
      *                      - means time1 < time2
      *                      + means time1 > time2

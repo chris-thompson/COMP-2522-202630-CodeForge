@@ -114,8 +114,8 @@ public final class Games {
     }
 
     /**
-     * A service consumer accepts a factory as a parameter, extracts a
-     * service from the factory, and then asks the service to act.
+     * Accepts a factory as a parameter, gets a Game from the factory, and
+     * plays it. It never names Checkers or Chess.
      * @param gameFactory an implementation of GameFactory
      */
     static void playGame(final GameFactory gameFactory) {

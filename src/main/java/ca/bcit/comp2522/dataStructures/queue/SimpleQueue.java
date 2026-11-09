@@ -4,7 +4,7 @@ import ca.bcit.comp2522.dataStructures.linkedList.AnotherLinkedList;
 import ca.bcit.comp2522.dataStructures.linkedList.EmptyLinkedListException;
 
 /**
- * Queue implements a queue by using a list and only exposing
+ * SimpleQueue implements a queue by using a list and only exposing
  * queue behaviours.  Neat!
  *
  * @author BCIT
@@ -15,7 +15,7 @@ public class SimpleQueue {
     private final AnotherLinkedList queueList;
 
     /**
-     * Constructs an object of type Queue.
+     * Constructs an object of type SimpleQueue.
      */
     public SimpleQueue() {
         queueList = new AnotherLinkedList("queue");

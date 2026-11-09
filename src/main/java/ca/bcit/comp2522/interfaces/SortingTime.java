@@ -3,7 +3,7 @@ package ca.bcit.comp2522.interfaces;
 import java.util.ArrayList;
 
 /**
- * Sort2 uses a Comparator (neato!).
+ * SortingTime uses a Comparator (neato!).
  *
  * @author BCIT
  * @version 2026

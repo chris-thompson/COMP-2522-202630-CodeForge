@@ -16,7 +16,7 @@ public final class WhenToUseWildcards {
     }
 
     static void displayBox(final Box<?> box) {
-        System.out.println("Box contains: " + box.get());
+        System.out.println("Box contains: " + box.getContent());
     }
 
     /**

@@ -26,7 +26,7 @@ public final class TwoDMapExample {
         // 1. "Vancouver", "A00012345"
         // 2. "New West", "A00067891"
 
-        // Add the BC Map to the student code.maps
+        // Add the BC Map to the student Map
 
         // Create Map called ON [City, Id] (or reuse object reference)
 
@@ -34,7 +34,7 @@ public final class TwoDMapExample {
         // 1. "Toronto", "A00038234"
         // 2. "Ottawa","A00000123"
 
-        // Add the ON Map to the student code.maps
+        // Add the ON Map to the student Map
 
         // Expected output:
         // student prov = BC {Vancouver=A00012345, New West=A00067891}

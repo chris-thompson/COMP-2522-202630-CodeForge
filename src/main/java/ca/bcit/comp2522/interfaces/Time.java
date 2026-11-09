@@ -11,7 +11,7 @@ public final class Time implements Comparable<Time> {
     /**
      * The number of minutes in an hour.
      */
-    public static final int HOURS_PER_MINUTE = 60;
+    public static final int MINUTES_PER_HOUR = 60;
 
     private int hour;
     private int minute;
@@ -81,7 +81,7 @@ public final class Time implements Comparable<Time> {
      * @param minutes an int
      */
     public void setMinute(final int minutes) {
-        if (minutes >= 0 && minutes < HOURS_PER_MINUTE) {
+        if (minutes >= 0 && minutes < MINUTES_PER_HOUR) {
             minute = minutes;
         } else {
             minute = 0;
@@ -93,7 +93,7 @@ public final class Time implements Comparable<Time> {
      * @param seconds an int
      */
     public void setSecond(final int seconds) {
-        if (seconds >= 0 && seconds < HOURS_PER_MINUTE) {
+        if (seconds >= 0 && seconds < MINUTES_PER_HOUR) {
             second = seconds;
         } else {
             second = 0;
@@ -138,10 +138,13 @@ public final class Time implements Comparable<Time> {
      */
     @Override
     public boolean equals(final Object object) {
+        if (object == null) {
+            return false;
+        }
         if (this == object) {
             return true;
         }
-        if (object == null || getClass() != object.getClass()) {
+        if (getClass() != object.getClass()) {
             return false;
         }
 

@@ -1,7 +1,7 @@
 package ca.bcit.comp2522.dataStructures.tree;
 
 /**
- * TreeNode. Note this class is not public. If we wanted to make this a static inner class,
+ * TreeNode. Note this class is not public. If we wanted to make this a static nested class,
  * do we have to change anything inside this class or inside the Tree class?
  *
  * @author BCIT

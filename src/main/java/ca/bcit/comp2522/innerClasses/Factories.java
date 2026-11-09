@@ -77,7 +77,7 @@ final class CookingService implements Service {
 
     /**
      * Check this out. It's a public static variable. Static means it's always available
-     * even before a PrintingService is instantiated. This is an anonymous ServiceFactory
+     * even before a CookingService is instantiated. This is an anonymous ServiceFactory
      * object.
      */
     public static final ServiceFactory COOKING_SERVICE_FACTORY = new ServiceFactory() {

@@ -24,6 +24,7 @@ public final class EmailInfoDemo {
         myAddressBook.addFriend("Adam", "adam@gmail.com");
         myAddressBook.addFriend("Benedykt", "ben@gmail.com");
         myAddressBook.addFriend("Cyryl", "rys@gmail.com");
+        myAddressBook.addFriend("Francine", "francine@gmail.com");
         System.out.println("Invoking listAll");
         myAddressBook.listAll();
         System.out.println("Invoking listSorted1");

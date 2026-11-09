@@ -1,8 +1,9 @@
 package ca.bcit.comp2522.dataStructures.stack;
 
 /**
- * StackInheritance implements a stack by extending the
- * List and only exposing stack behaviours.  Neat!
+ * StackInheritance implements a stack by extending the list. Compare it with
+ * StackComposition. This class also exposes every list behaviour, so a caller
+ * can insertAtBack on a "stack". That is why we favour composition.
  *
  * @author BCIT
  * @version 2026

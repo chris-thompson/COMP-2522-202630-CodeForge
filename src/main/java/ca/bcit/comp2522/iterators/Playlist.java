@@ -42,7 +42,8 @@ public final class Playlist implements Iterable<Track> {
      * every call. If they stop matching, the collection was modified while a
      * traversal was in progress and the Iterator gives up immediately rather
      * than returning nonsense. That is what "fail-fast" means. The real
-     * ArrayList does exactly this, under exactly this name.
+     * ArrayList does exactly this, in a field called modCount, the name on
+     * the Week 11 slide.
      */
     private int modificationCount;
 

@@ -58,13 +58,15 @@ public class MagazineList {
     }
 
     /*
-     * An inner class that represents a node in the magazine list. The public
-     * variables are accessed by the MagazineList class
+     * A static nested class that represents a node in the magazine list. It is
+     * static because a node needs nothing from any particular list, which is
+     * the case Week 11 describes. MagazineList can read its private fields
+     * because MagazineList encloses it.
      *
      * @author BCIT
      * @version 2026
      */
-    private class MagazineNode {
+    private static class MagazineNode {
 
         /*
          * The magazine stored in this node.

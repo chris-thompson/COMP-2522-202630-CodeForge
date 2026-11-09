@@ -17,7 +17,7 @@ abstract class Worker {
     }
 
     /**
-     * An abstract method to be overridden by a subclass of Base.
+     * An abstract method to be overridden by a subclass of Worker.
      */
     public abstract void doSomething();
 }
@@ -31,7 +31,7 @@ abstract class Worker {
  *<p>
  * Pay attention to the constructor. The Worker constructor accepts a
  * parameter. We pass the parameter
- * to the constructor (the first line of getBase) and then describe the anonymous class that extends
+ * to the constructor (the first line of getWorker) and then describe the anonymous class that extends
  * Worker.
  *
  * @author BCIT
@@ -47,7 +47,7 @@ public final class AnonymousConstructor {
      * Returns an instance of the Worker class. Well, actually it returns a freshly made instance
      * of an implementation of the Worker class.
      * @param number an integer
-     * @return anonymousBase an instance of the Worker class.
+     * @return an instance of the Worker class.
      */
     static Worker getWorker(final int number) {
 

@@ -9,7 +9,7 @@ package ca.bcit.comp2522.innerClasses;
 public class ShadowingDemo {
 
     /**
-     * A public instance variable. Terrible. Never do this. It's for demo purposes only.
+     * An instance variable named x, on purpose, so that the inner class can shadow it.
      */
     private final int x = 0;
 
@@ -32,7 +32,7 @@ public class ShadowingDemo {
     class FirstLevel {
 
         /**
-         * A public instance variable. Terrible. Don't do this. It's for demo purposes only.
+         * Another x. It shadows the x in the enclosing class.
          */
         private final int x = 1;
 

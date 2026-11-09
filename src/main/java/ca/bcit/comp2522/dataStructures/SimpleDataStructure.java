@@ -1,9 +1,12 @@
 package ca.bcit.comp2522.dataStructures;
 
+import java.util.NoSuchElementException;
+
 /**
  * A simple data structure stores an array of int. It contains an iterator class!
  *<p>
- * It is a simple iterable.
+ * It hands out an iterator, but it does not implement Iterable, so a for-each
+ * loop will not work on it. What would you have to add?
  *<p>
  * Pay attention to this.  Read the source code for ArrayList.java as well.
  *<p>
@@ -30,8 +33,10 @@ public class SimpleDataStructure {
      * Uses an instance of the EvenIterator inner class to print the even
      * members of the collection. Note the use of hasNext followed by next.
      *<p>
-     * Pay attention to the way we instantiate the inner object. We have to
-     * use this.new and we assign it to a variable of the correct type.
+     * Pay attention to the way we instantiate the inner object. Inside an
+     * instance method plain new would do, because this is the enclosing object.
+     * Writing this.new says so out loud. From outside the class you must name
+     * the outer object, as in outerObject.new Inner().
      */
     public void printEven() {
         DataStructureIterator iterator = this.new EvenIterator();
@@ -43,8 +48,8 @@ public class SimpleDataStructure {
 
     /**
      * Check this out. We are extending an existing Iterator. Check out the Iterator
-     * interface (the source code is in the Learning Hub and when you downloaded
-     * Java you probably downloaded a file called src.zip that contains it.)
+     * interface (the source code is in a file called src.zip, inside the JDK you
+     * installed.)
      */
     interface DataStructureIterator extends java.util.Iterator<Integer> { }
 
@@ -70,9 +75,14 @@ public class SimpleDataStructure {
          * Returns an Integer representing the next integer in the iteration. The
          * integer now "points to" this object.
          * @return next even integer wrapped in an Integer object.
+         * @throws NoSuchElementException if there are no more even integers
          */
         @Override
         public Integer next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException("no more even integers");
+            }
+
             Integer retValue = arrayOfInts[nextIndex];
             nextIndex += 2;
             return retValue;

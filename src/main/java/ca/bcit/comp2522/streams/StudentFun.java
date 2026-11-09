@@ -9,7 +9,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 /**
- * Six ways to ask a collection a question, using streams.
+ * Eight ways to ask a collection a question, using streams.
  *
  * A stream is not a collection. A collection holds elements; a stream describes
  * a computation over elements. You build a pipeline in three parts:
@@ -151,6 +151,40 @@ public final class StudentFun {
     }
 
     /**
+     * Returns the total of every student's age, using a reduction.
+     *
+     * A reduction combines all the elements into one result. The 0 is the
+     * starting value, and Integer::sum says how to combine two values. With a
+     * starting value the answer is a plain value. Leave it out and reduce
+     * returns an Optional, because an empty stream would have no answer.
+     *
+     * @param students a Collection of Student
+     * @return the sum of the students' ages in years
+     */
+    public static int totalAge(final Collection<Student> students) {
+        return students.stream()
+                .map(Student::getAgeInYears)
+                .reduce(0, Integer::sum);
+    }
+
+    /**
+     * Returns the name of every student in every section, as one List.
+     *
+     * Each section is a List, so map would leave us with a stream of Lists.
+     * flatMap replaces each List with its elements, which leaves one stream of
+     * Students.
+     *
+     * @param sections a Collection of sections, each one a List of Student
+     * @return a new List holding every student's name
+     */
+    public static List<String> namesAcrossSections(final Collection<List<Student>> sections) {
+        return sections.stream()
+                .flatMap(List::stream)
+                .map(Student::getName)
+                .collect(Collectors.toList());
+    }
+
+    /**
      * Builds a collection of invented students to demonstrate with.
      *
      * @return a Collection of randomly generated Student objects
@@ -215,5 +249,15 @@ public final class StudentFun {
 
         System.out.println("--- average graduate age ---");
         System.out.println(getAverageGraduateAge(students));
+
+        System.out.println("--- total age, with reduce ---");
+        System.out.println(totalAge(students));
+
+        System.out.println("--- two sections, flattened ---");
+        final List<Student> everyone = new ArrayList<>(students);
+        final int half = everyone.size() / 2;
+        System.out.println(namesAcrossSections(List.of(
+                everyone.subList(0, half),
+                everyone.subList(half, everyone.size()))));
     }
 }

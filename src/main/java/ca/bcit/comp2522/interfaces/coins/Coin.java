@@ -66,8 +66,8 @@ public final class Coin implements Lockable {
     @Override
     public boolean lock(final int candidateKey) {
         if (!locked && this.key == candidateKey) {
-                locked = true;
-                return true;
+            locked = true;
+            return true;
         }
         return false;
     }
@@ -99,10 +99,13 @@ public final class Coin implements Lockable {
      */
     @Override
     public boolean equals(final Object object) {
+        if (object == null) {
+            return false;
+        }
         if (this == object) {
             return true;
         }
-        if (object == null || getClass() != object.getClass()) {
+        if (getClass() != object.getClass()) {
             return false;
         }
 

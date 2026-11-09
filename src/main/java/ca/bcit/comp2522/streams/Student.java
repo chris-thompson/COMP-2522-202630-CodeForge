@@ -85,10 +85,13 @@ public final class Student {
      */
     @Override
     public boolean equals(final Object o) {
+        if (o == null) {
+            return false;
+        }
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (getClass() != o.getClass()) {
             return false;
         }
         Student student = (Student) o;
@@ -108,13 +111,13 @@ public final class Student {
     }
 
     /**
-     * Returns a description of this Standing.
+     * Returns a description of this Student.
      *
      * This implementation reports the values of the fields declared in
-     * Standing. A subclass that adds fields of its own should override this
+     * Student. A subclass that adds fields of its own should override this
      * method and include them.
      *
-     * @return this Standing as a String
+     * @return this Student as a String
      */
     @Override
     public String toString() {

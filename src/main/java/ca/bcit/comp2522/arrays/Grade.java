@@ -75,10 +75,13 @@ public final class Grade {
      */
     @Override
     public boolean equals(final Object object) {
+        if (object == null) {
+            return false;
+        }
         if (this == object) {
             return true;
         }
-        if (object == null || getClass() != object.getClass()) {
+        if (getClass() != object.getClass()) {
             return false;
         }
 

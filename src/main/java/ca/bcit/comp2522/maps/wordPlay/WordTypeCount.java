@@ -45,7 +45,7 @@ public final class WordTypeCount {
     }
 
     /*
-     * Displays the map.StringTokenizer
+     * Displays the map.
      */
     private void displayMap() {
         Set<String> keys = map.keySet();

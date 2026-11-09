@@ -51,7 +51,9 @@ public class GenericStackDriver {
         try {
             System.out.println("\nPopping elements from doubleStack");
             double popValue;
-            while (true) { // Terrible idea!
+            // Terrible idea! Java looks before it leaps, but GenericStack has no
+            // isEmpty method, so this loop can only end with an exception.
+            while (true) {
                 popValue = doubleGenericStack.pop();
                 System.out.printf("%.1f ", popValue);
             }

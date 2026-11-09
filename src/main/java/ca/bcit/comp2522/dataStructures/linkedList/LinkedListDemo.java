@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * ListDemo.
+ * LinkedListDemo.
  *
  * @author BCIT
  * @version 2026
@@ -19,7 +19,7 @@ public final class LinkedListDemo {
             {"gold", "white", "brown", "blue", "grey", "silver"};
 
     /**
-     * Constructs an object of type ListTest.
+     * Constructs an object of type LinkedListDemo.
      */
     public LinkedListDemo() {
 

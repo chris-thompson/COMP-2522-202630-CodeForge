@@ -1,7 +1,7 @@
 package ca.bcit.comp2522.sorting;
 
 /**
- * Time manages a moment in time: hours, minutes, and seconds.
+ * SimpleTime manages a moment in time: hours, minutes, and seconds.
  *
  * @author BCIT
  * @version 2026
@@ -25,14 +25,14 @@ public final class SimpleTime {
     private int second;
 
     /**
-     * Constructs an object of type Time.
+     * Constructs an object of type SimpleTime.
      */
     public SimpleTime() {
         this(0, 0, 0);
     }
 
     /**
-     * Constructs an object of type Time.
+     * Constructs an object of type SimpleTime.
      * @param h hours an int
      */
     public SimpleTime(final int h) {
@@ -40,7 +40,7 @@ public final class SimpleTime {
     }
 
     /**
-     * Constructs an object of type Time.
+     * Constructs an object of type SimpleTime.
      * @param h hours an int
      * @param m minutes an int
      */
@@ -49,7 +49,7 @@ public final class SimpleTime {
     }
 
     /**
-     * Constructs an object of type Time.
+     * Constructs an object of type SimpleTime.
      * @param h hours an int
      * @param m minutes an int
      * @param s seconds an int
@@ -143,7 +143,7 @@ public final class SimpleTime {
     }
 
     /**
-     * Returns a string representation of this Time.
+     * Returns a string representation of this SimpleTime.
      * @return description a string
      */
     @Override

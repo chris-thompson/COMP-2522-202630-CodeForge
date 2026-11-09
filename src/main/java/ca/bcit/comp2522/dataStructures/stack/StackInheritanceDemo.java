@@ -1,15 +1,15 @@
 package ca.bcit.comp2522.dataStructures.stack;
 
 /**
- * StackInheritanceTest.
+ * StackInheritanceDemo.
  *
  * @author BCIT
  * @version 2026
  */
 public final class StackInheritanceDemo {
 
-    /** The third value pushed in, so it is the first one to come back out. */
-    private static final int THIRD_VALUE = 5;
+    /** The last value pushed in, so it is the first one to come back out. */
+    private static final int LAST_VALUE = 5;
 
     private StackInheritanceDemo() {
     }
@@ -28,17 +28,21 @@ public final class StackInheritanceDemo {
         stack.print();
         stack.push(1);
         stack.print();
-        stack.push(THIRD_VALUE);
+        stack.push(LAST_VALUE);
         stack.print();
 
+        while (!stack.isEmpty()) {
+            Object removedObject = stack.pop();
+            System.out.printf("%s popped%n", removedObject);
+            stack.print();
+        }
+
+        // The loop looked before it leapt. Popping an empty stack anyway is a
+        // programming error, and it throws.
         try {
-            while (true) {
-                Object removedObject = stack.pop();
-                System.out.printf("%s popped%n", removedObject);
-                stack.print();
-            }
+            stack.pop();
         } catch (EmptySimpleDoublyLinkedListException emptyListException) {
-            emptyListException.printStackTrace();
+            System.out.println("Popped an empty stack: " + emptyListException.getClass().getSimpleName());
         }
     }
 }

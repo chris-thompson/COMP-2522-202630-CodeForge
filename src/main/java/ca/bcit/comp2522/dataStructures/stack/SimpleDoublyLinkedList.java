@@ -30,7 +30,10 @@ public class SimpleDoublyLinkedList {
             firstNode = new SimpleNode(insertItem);
             lastNode = firstNode;
         } else {
-            firstNode = new SimpleNode(insertItem, firstNode);
+            final SimpleNode newNode = new SimpleNode(insertItem);
+            newNode.setNext(firstNode);
+            firstNode.setPrevious(newNode);
+            firstNode = newNode;
         }
     }
 
@@ -44,8 +47,10 @@ public class SimpleDoublyLinkedList {
             firstNode = new SimpleNode(insertItem);
             lastNode = firstNode;
         } else {
-            lastNode.setNext(new SimpleNode(insertItem));
-            lastNode = lastNode.getNext();
+            final SimpleNode newNode = new SimpleNode(insertItem);
+            newNode.setPrevious(lastNode);
+            lastNode.setNext(newNode);
+            lastNode = newNode;
         }
     }
 
@@ -66,6 +71,7 @@ public class SimpleDoublyLinkedList {
             lastNode = null;
         } else {
             firstNode = firstNode.getNext();
+            firstNode.setPrevious(null);
         }
         return removedItem;
     }
@@ -86,13 +92,8 @@ public class SimpleDoublyLinkedList {
             firstNode = null;
             lastNode = null;
         } else {
-            SimpleNode current = firstNode;
-
-            while (current.getNext() != lastNode) {
-                current = current.getNext();
-            }
-            lastNode = current;
-            current.setNext(null);
+            lastNode = lastNode.getPrevious();
+            lastNode.setNext(null);
         }
         return removedItem;
     }
@@ -126,12 +127,10 @@ public class SimpleDoublyLinkedList {
     }
 
     /**
-     * SimpleNode for a SimpleLinkedList. This is a static class. I put it inside the
-     * SimpleDoublyLinkedList class because nobody else needs to know it exists. I made
-     * it static to demonstrate that a static class does NOT get special access to
-     * the private members of the outer class. I did this for encapsulation. Static
-     * inner classes demonstrate good encapsulation and good information hiding because
-     * the information inside the outer class is hidden.
+     * SimpleNode for a SimpleDoublyLinkedList. This is a static nested class. I put it
+     * inside SimpleDoublyLinkedList because nobody else needs to know it exists. It is
+     * static because a node needs nothing from any particular list, so it should not
+     * carry a hidden reference to one.
      *
      * @author BCIT
      * @version 2026
@@ -140,6 +139,7 @@ public class SimpleDoublyLinkedList {
 
         private final Object data;
         private SimpleNode nextNode;
+        private SimpleNode previousNode;
 
         /**
          * Constructs an object of type SimpleNode.
@@ -147,18 +147,9 @@ public class SimpleDoublyLinkedList {
          * @param object the datum to store in the node
          */
         SimpleNode(final Object object) {
-            this(object, null);
-        }
-
-        /**
-         * Constructs an object of type SimpleNode.
-         *
-         * @param object the datum to store in the SimpleNode
-         * @param nextNode the next nextNode
-         */
-        SimpleNode(final Object object, final SimpleNode nextNode) {
             data = object;
-            this.nextNode = nextNode;
+            nextNode = null;
+            previousNode = null;
         }
 
         /**
@@ -186,6 +177,24 @@ public class SimpleDoublyLinkedList {
          */
         public void setNext(final SimpleNode newNext) {
             nextNode = newNext;
+        }
+
+        /**
+         * Returns a reference to the previous SimpleNode.
+         *
+         * @return the previous SimpleNode, or null if this is the first
+         */
+        public SimpleNode getPrevious() {
+            return previousNode;
+        }
+
+        /**
+         * Sets the previous SimpleNode to be the argument.
+         *
+         * @param newPrevious a SimpleNode
+         */
+        public void setPrevious(final SimpleNode newPrevious) {
+            previousNode = newPrevious;
         }
     }
 }

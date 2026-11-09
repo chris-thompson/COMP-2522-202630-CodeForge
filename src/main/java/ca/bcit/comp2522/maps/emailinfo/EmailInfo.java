@@ -90,7 +90,7 @@ public class EmailInfo {
         boolean friendFound = false;
         String formattedAddress = formatAddress(address);
         for (String person : addressBook.keySet()) {
-            if (getAddress(formatAddress(person)).equals(formattedAddress)) {
+            if (addressBook.get(person).equals(formattedAddress)) {
                 friendFound = true;
                 System.out.println(person + " has address " + address);
             }

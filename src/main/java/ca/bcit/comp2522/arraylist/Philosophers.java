@@ -13,7 +13,7 @@ public final class Philosophers {
     private Philosophers() { }
 
     /**
-     * Stores and modifies a list of band members.
+     * Stores and modifies a list of philosophers.
      *
      * @param args command line arguments (unused)
      */
